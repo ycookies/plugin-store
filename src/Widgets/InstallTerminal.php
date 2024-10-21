@@ -10,7 +10,7 @@ class InstallTerminal extends Widget {
     /**
      * @var string
      */
-    protected $view = 'admin::plugin-store.install';
+    protected $view = 'ycookies.plugin-store::install';
 
     /**
      * @var array

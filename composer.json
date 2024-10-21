@@ -1,7 +1,7 @@
 {
     "name": "ycookies/plugin-store",
     "alias": "插件市场",
-    "description": "dcat admin 插件市场",
+    "description": "dcat-plus admin 插件市场",
     "type": "library",
     "keywords": ["dcat-admin", "extension"],
     "homepage": "https://github.com/ycookies/plugin-store",
@@ -13,8 +13,9 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
-        "dcat/laravel-admin": "~2.0"
+        "php": ">=7.4.0",
+        "dcat-plus/laravel-admin": "~1.0",
+        "composer/composer": "^2.7"
     },
     "autoload": {
         "psr-4": {

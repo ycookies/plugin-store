@@ -35,7 +35,6 @@ use Dcat\Admin\Widgets\Timeline;
 use Dcat\Admin\PluginStore\Composer\ComposerAdapter;
 use Symfony\Component\Console\Input\StringInput;
 use Illuminate\Contracts\Container\Container;
-use Composer\Console\Application;
 use Dcat\Admin\PluginStore\OutputLogger;
 use Dcat\Admin\PluginStore\Paths;
 use Illuminate\Filesystem\Filesystem;
@@ -44,15 +43,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class PluginStoreController extends Controller {
     use DownloadZipTrait;
-    public $composer;
-//$this->composer = $composer;
-    //$oupot = $this->composer->runExe('require ycookies/kefubar:1.0.2',null,true);
-    /*echo "<pre>";
-    var_dump(['123',$oupot]);
-    echo "</pre>";
-    exit;*/
-
-
     public function index(Content $content,ComposerAdapter $composer) {
 
         return $content
@@ -127,23 +117,11 @@ class PluginStoreController extends Controller {
                     $actions->prepend($user_modal);
                 }
 
-
-
-
-
-                // 第二个 modal
-                /*$modal2 = Modal::make('查看环境要求','444');
-                $modal2->title('查看环境要求');
-                $modal2->style('z-index:1052 !important' ,true);
-                $modal2->sm();
-                $modal2->button('查看');*/
-
                 if (!empty($StoreUser_token)) {
                     // 第一个 modal
                     $modal1 = Modal::make();
                     $modal1->title('安装 ' . $actions->row->product_name . '(' . $actions->row->package_name . ') 其它版本');
                     $modal1->lg();
-                    //$modal1->body($modal2->render())
                     $modal1->body((new ReleasesTable())->payload(['package_name' => $actions->row->package_name,'product_name'=>$actions->row->product_name,'product_slug'=>$actions->row->product_slug]))
                         ->button('<span class="tips" data-title="安装其它版本"> <i class="fa fa-sort-desc" style="font-size: 20px"></i> &nbsp;&nbsp;</span>');
                     $actions->prepend($modal1);
@@ -155,11 +133,6 @@ class PluginStoreController extends Controller {
                         ->button('<span class="tips" data-title="安装其它版本"> <i class="fa fa-sort-desc" style="font-size: 20px"></i> &nbsp;&nbsp;</span>');
                     $actions->prepend($user_modal1);
                 }
-                //
-
-
-                //$actions->prepend(AdminExtensionInstallAction::make($title));
-
                 $actions->disableDelete();
                 $actions->disableQuickEdit();
                 $actions->disableView();
@@ -201,9 +174,6 @@ class PluginStoreController extends Controller {
 </div>
 HTML;
             $grid->tools($mmmk);
-
-            //$grid->tools($modal);
-
             $StoreUser_info = cache()->get('StoreUser_info');
             if (!empty($StoreUser_info)) {
                 $options = [
@@ -254,8 +224,6 @@ HTML;
 
     // 响应下一步
     private function doNext($command, $step, $msgs = [], $data = []) {
-        //$input = InputPackage::buildFromInput();
-        //$data  = array_merge($input->getJsonAsInput('param')->all(), $data);
         $datajson    = Request()->get('param');
         $jsonString  = str_replace('&quot;', '"', $datajson);
         $data_arr    = json_decode($jsonString, true);
@@ -272,8 +240,7 @@ HTML;
     }
 
     public function install(Request $request) {
-        //AdminPermission::permitCheck('ModuleStoreManage');
-        //AdminPermission::demoCheck();
+
         $token = cache()->get('StoreUser_token');
         $step  = $request->get('step');
         if (empty($token)) {
@@ -288,10 +255,7 @@ HTML;
         $zip_url     = !empty($data_arr['zip_url']) ? $data_arr['zip_url'] : '';
         $version     = !empty($data_arr['version']) ? $data_arr['version'] : '';
         if (empty($title)) return JsonResponse::make()->error('模板名 不能为空');
-        //if (empty($zip_url)) return JsonResponse::make()->error('模板安装包 不能为空');
-        // 开始安装
-        //$request->merge($data_arr);
-        //$msg = $this->handleInstall($request);
+
         switch ($step) {
             case 'installModule':
                 return $this->doFinish([
