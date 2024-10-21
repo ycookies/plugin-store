@@ -1,0 +1,32 @@
+{
+    "name": "ycookies/plugin-store",
+    "alias": "插件市场",
+    "description": "dcat admin 插件市场",
+    "type": "library",
+    "keywords": ["dcat-admin", "extension"],
+    "homepage": "https://github.com/ycookies/plugin-store",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "杨光",
+            "email": "3664839@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "dcat/laravel-admin": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dcat\\Admin\\PluginStore\\": "src/"
+        }
+    },
+    "extra": {
+        "dcat-admin": "Dcat\\Admin\\PluginStore\\PluginStoreServiceProvider",
+        "laravel": {
+            "providers": [
+                "Dcat\\Admin\\PluginStore\\PluginStoreServiceProvider"
+            ]
+        }
+    }
+}
