@@ -29,8 +29,9 @@ class StoreUserLogout extends Action
      */
     public function handle(Request $request)
     {
-        cache()->forget('StoreUser_info');
-        cache()->forget('StoreUser_token');
+        cache()->forget('StoreUser_info_'.Admin::user()->id);
+        cache()->forget('StoreUser_token_'.Admin::user()->id);
+        cache()->forget('StoreUser_memberUserId_'.Admin::user()->id);
         return $this->response()->success('已退出登陆')->refresh();
     }
 
